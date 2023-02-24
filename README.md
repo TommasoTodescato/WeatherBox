@@ -24,7 +24,7 @@ In fact, it is sufficient to use the `sensor` struct.
 struct sensor {const int pin; int value; int limit;}
 ``
 
-Whe the limit is surpassed, TX sends a signal that is interpreted by WeatherTerminal as a sound, and so it reproduces one.
+When the limit is surpassed, TX sends a signal that is interpreted by WeatherTerminal as a sound, and so it reproduces it.
 You can calibrate your treshold for every sensor with the configuration mode.
 
 ## Configuration mode:
