@@ -68,7 +68,7 @@ void loop()
     btSerial.println(light.value);
     if (gas.value > gas.limit || light.value > light.limit)
     {
-      btSerial.println("ABOVE");
+      btSerial.println("HIGH");
     }
     delay(1500);
   }
