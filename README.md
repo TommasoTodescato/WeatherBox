@@ -19,13 +19,9 @@ However, if you want to have sound support, it is reccomended to use [WeatherTer
 ## General Behaviour:
 The nature of the project is completely modular, and it's structured so that it should be pretty easy to add your own sensors.
 In fact, it is sufficient to use the `sensor` struct.
+
 ``
-struct sensor 
-{
-	const int pin;
-	int value;
-	int limit;
-};
+struct sensor {const int pin; int value; int limit;}
 ``
 
 Whe the limit is surpassed, TX sends a signal that is interpreted by WeatherTerminal as a sound, and so it reproduces one.
@@ -33,8 +29,8 @@ You can calibrate your treshold for every sensor with the configuration mode.
 
 ## Configuration mode:
 There are 2 main modes of execution:
-0. Standard mode
-1. Configuration mode
+1. Standard mode
+2. Configuration mode
 
 In configuration mode you can calibrate your sensors during runtime.
 To enter configuration mode, send `1` in the terminal at any time while you are connected to WeatherBox.
