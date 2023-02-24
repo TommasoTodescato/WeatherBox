@@ -99,4 +99,12 @@ void loop()
     btSerial.println("Configuration successfull...");
     mainMode = "0\r\n";
   }
+
+  //  Invalid mode
+  else
+  {
+    btSerial.println("Invalid Input (0 and 1 are valid)");
+    while(!btSerial.available());
+    mainMode = btSerial.readString();
+  }
 }
