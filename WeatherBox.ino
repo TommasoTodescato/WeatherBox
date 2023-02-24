@@ -1,11 +1,5 @@
 #include <SoftwareSerial.h>
 
-#define gasPin 5
-#define lightPin 4
-int gasValue = 0;
-int lightValue = 0;
-int gasLimit = 450;
-int lightLimit = 700;
 char mainMode = "1";
 /*  MODE:
   0: STANDARD
@@ -14,7 +8,17 @@ char mainMode = "1";
 
 SoftwareSerial btSerial(10, 11);  // RX | TX
 
-int calibrateSensor(limit)
+struct sensor 
+{
+  const int pin;
+  int value;
+  int limit;
+};
+
+sensor gas = {5, 0 , 450};
+sensor light = {4, 0, 700};
+
+int calibrateSensor(int limit)
 {
   char input = "1";
   int newLimit = limit;
@@ -55,12 +59,16 @@ void loop()
   //  Standard mode
   if(mainMode == "0")
   {
-    gasValue = analogRead(gasPin);
-    lightValue = analogRead(lightPin);
-    btSerial.print("Gas:");
-    btSerial.println(gasValue);
-    btSerial.print("Light:");
-    btSerial.println(lightValue);
+    gas.value = analogRead(gas.pin);
+    light.value = analogRead(light.pin);
+    btSerial.print("Gas: ");
+    btSerial.println(gas.value);
+    btSerial.print("Light: ");
+    btSerial.println(light.value);
+    if(gas.value > gas.limit || light.value > light.limit)
+    {
+      btSerial.println("ABOVE");
+    }
     delay(2000);
   }
   //  Configuration Mode
@@ -79,12 +87,12 @@ void loop()
       if(confMode == "1")
       {
         btSerial.println("Gas Level configuration");
-        gasLimit = calibrateSensor(gasLimit);
+        gas.limit = calibrateSensor(gas.limit);
       }
       else if(confMode == "2")
       {
         btSerial.println("Light level configuration");
-        lightLimit = calibrateSensor(lightLimit);
+        light.limit = calibrateSensor(light.limit);
       }
     }
   }

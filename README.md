@@ -13,18 +13,29 @@ To be used with [WeatherTerminal](https://github.com/TommasoTodescato/WeatherTer
 	- (Pull up 10kΩ, output to Arduino A4)
 
 ### WeatherTerminal:
-Every bluetooth terminal which can receive or send text should work.
+Every bluetooth terminal that can receive or send text should work.
 However, if you want to have sound support, it is reccomended to use [WeatherTerminal](https://github.com/TommasoTodescato/WeatherTerminal.git).
 
 ## General Behaviour:
-2 Modalità:
-Output
+The nature of the project is completely modular, and it's structured so that it should be pretty easy to add your own sensors.
+In fact, it is sufficient to use the `sensor` struct.
+``
+struct sensor 
+{
+	const int pin;
+	int value;
+	int limit;
+};
+``
 
-Modalità verbosa
-Modalità silenziosa (solo suono)
+Whe the limit is surpassed, TX sends a signal that is interpreted by WeatherTerminal as a sound, and so it reproduces one.
+You can calibrate your treshold for every sensor with the configuration mode.
 
-Input
+## Configuration mode:
+There are 2 main modes of execution:
+0. Standard mode
+1. Configuration mode
 
-Entrare in modalità di input
-Calibrare con percentuali preimpostate
-Quando si ha finito si esce e si torna in modalità output
+In configuration mode you can calibrate your sensors during runtime.
+To enter configuration mode, send `1` in the terminal at any time while you are connected to WeatherBox.
+Once you are in, you will have all the instructions needed.
