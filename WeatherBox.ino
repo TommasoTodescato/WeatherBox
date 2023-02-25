@@ -10,7 +10,7 @@ struct sensor
 };
 
 sensor gas = { 5, 0, 450 };
-sensor light = { 4, 0, 700 };
+sensor light = { 4, 0, 950 };
 String mainMode = "0\r\n";
 
 int calibrateSensor(int limit)
@@ -25,13 +25,9 @@ int calibrateSensor(int limit)
     while (!btSerial.available());
     input = btSerial.readString();
     if (input == "+\r\n")
-    {
       newLimit = newLimit + 50;
-    }
     else if (input == "-\r\n")
-    {
       newLimit = newLimit - 50;
-    }
   }
   btSerial.print("New treshold: ");
   btSerial.println(newLimit);
@@ -53,9 +49,7 @@ void setup()
 void loop()
 {
   if (btSerial.available())
-  {
     mainMode = btSerial.readString();
-  }
 
   //  Standard mode
   if (mainMode == "0\r\n")
@@ -67,14 +61,12 @@ void loop()
     btSerial.print("Light: ");
     btSerial.println(light.value);
     if (gas.value > gas.limit || light.value > light.limit)
-    {
       btSerial.println("HIGH");
-    }
     delay(1500);
   }
   
   //  Configuration Mode
-  else if (mainMode == "1\r\n") 
+  else if (mainMode == "1\r\n")
   {
     String confMode = "3\r\n";
     btSerial.println("CONFIGURATION MODE");
